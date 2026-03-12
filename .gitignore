@@ -1,0 +1,12 @@
+.idea/
+.venv/
+__pycache__/
+*.pyc
+models/
+*.pt
+*.onnx
+*.mp4
+*.mov
+*.avi
+*.log
+*.zip

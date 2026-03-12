@@ -1,10 +1,15 @@
 import os
+import sys
 import time
 from collections import deque, defaultdict
 from dataclasses import dataclass, field
 from typing import Deque, Dict, List, Optional, Tuple
 
-import cv2
+try:
+    import cv2
+except Exception as exc:
+    cv2 = None
+    CV2_ERROR = str(exc)
 import numpy as np
 import streamlit as st
 import requests
@@ -400,6 +405,13 @@ def main() -> None:
     st.set_page_config(page_title="Table Tennis Rally Analyzer", layout="wide")
     st.title("Table Tennis Rally Analyzer")
     st.caption("Match mode: analyze both players. Training mode: focus on improvement + ball path.")
+
+    if cv2 is None:
+        st.error(
+            "OpenCV failed to import. Streamlit Cloud is likely using an unsupported Python version. "
+            f"Python version: {sys.version}"
+        )
+        st.stop()
 
     if torch is None:
         st.warning("PyTorch not found. The app will run in heuristic mode only.")
